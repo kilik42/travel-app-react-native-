@@ -33,7 +33,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from 'react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import colors from './assets/colors/colors';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+Entypo.loadFont();
+MaterialCommunityIcons.loadFont();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -44,12 +48,35 @@ const TabNavigator = () => {
       style: styles.tabBar,
       activeTintColor: colors.orange,
       inactiveTintColor: colors.gray,
+      showLabel: false,
     }}
     
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name="Liked" component={Liked} />
+      <Tab.Screen name="Home" component={Home} 
+       options={{
+
+        tabBarIcon: ({ color }) => (
+          <Entypo name="home" size={24} color={color} />
+        ),
+      }}
+      />
+      <Tab.Screen name="Profile" component={Profile}
+      options={{
+        tabBarIcon: ({ color }) => (
+          <MaterialCommunityIcons name="account" size={24} color={color} />
+        ),
+      }}
+      />
+
+
+      <Tab.Screen name="Liked" component={Liked} 
+
+      options={{
+      tabBarIcon: ({ color }) => (
+        <Entypo name="heart" size={24} color={color} />
+      )
+      }}
+      />
       {/* <Tab.Screen name="Details" component={Details} /> */}
     </Tab.Navigator>
   );  
@@ -62,10 +89,22 @@ const App = () => {
     <NavigationContainer>
 
       <Stack.Navigator>
-        <Stack.Screen name="TabNavigator" component={TabNavigator} />
+        <Stack.Screen name="TabNavigator" component={TabNavigator} 
+        options={{headerShown: false}}/>
+        <Stack.Screen name="Details" component={Details} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: colors.white,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  }
+  
+
+
+});
 export default App;
